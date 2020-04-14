@@ -5,8 +5,25 @@ window=Tk()
 window.geometry("500x300")
 window.title("testing")
 
+def show_ans(ansDict):#added
+    ans1 = 'total count: '+str(ansDict['total'])
+    ans2 = 'kadi count: '+str(ansDict['kadi_count'])
+    ans3 = 'matti cont: '+str(ansDict['matti_count'])
+    ans4 = 'soya count: '+str(ansDict['soya_count'])
+    l1 = Label(window,text = ans1)
+    l2 = Label(window,text = ans2)
+    l3 = Label(window,text = ans3)
+    l4 = Label(window,text = ans4)
+    l1.pack()
+    l2.pack()
+    l3.pack()
+    l4.pack()
+
 def prediction():
-    import Object_detection_image
+    import Object_detection_image as odi
+    ansDict = odi.get_ans()
+    show_ans(ansDict)
+
 def capture():
     print("Starting Camera")
     import cv2
@@ -67,6 +84,9 @@ def exitt():
     move.move()
     rename.rename()
     exit()
+
+
+
     
 
 

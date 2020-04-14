@@ -38,12 +38,10 @@ CWD_PATH = os.getcwd()
 
 # Path to frozen detection graph .pb file, which contains the model that is used
 # for object detection.
-print(CWD_PATH)
 PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,'frozen_inference_graph.pb')
 
 # Path to label map file
-print(CWD_PATH)
-PATH_TO_LABELS = ('training/label_map.pbtxt')
+PATH_TO_LABELS = ('C:/tensorflow1/models/research/object_detection/training/label_map.pbtxt')
 
 # Path to image
 PATH_TO_IMAGE = os.path.join(CWD_PATH,IMAGE_NAME)
@@ -63,13 +61,13 @@ category_index = label_map_util.create_category_index(categories)
 # Load the Tensorflow model into memory.
 detection_graph = tf.Graph()
 with detection_graph.as_default():
-    od_graph_def = tf.GraphDef()
-    with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+    od_graph_def = tf.compat.v1.GraphDef()
+    with tf.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
 
-    sess = tf.Session(graph=detection_graph)
+    sess = tf.compat.v1.Session(graph=detection_graph)
 
 # Define input and output tensors (i.e. data) for the object detection classifier
 
@@ -87,7 +85,6 @@ detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
 
 # Number of objects detected
 num_detections = detection_graph.get_tensor_by_name('num_detections:0')
-print(num_detections)
 
 # Load image using OpenCV and
 # expand image dimensions to have shape: [1, None, None, 3]
@@ -110,10 +107,8 @@ vis_util.visualize_boxes_and_labels_on_image_array(
     np.squeeze(scores),
     category_index,
     use_normalized_coordinates=True,
-    line_thickness=2,
-    min_score_thresh=0.70)
-
-
+    line_thickness=8,
+    min_score_thresh=0.40)
 
 final_score = np.squeeze(scores)
 cls=np.squeeze(classes).astype(np.int32)
@@ -135,8 +130,13 @@ print('Total number of prediction',count)
 print('Total number of Kadi',kadi)
 print('Total number of Moti Mitti',matti)
 print('Total number of Soyabean',soya)
+
+
 # All the results have been drawn on image. Now display the image.
 cv2.imshow('Object detector', image)
+ansDict = {'total': count, 'kadi_count' : kadi, 'matti_count' : matti, 'soya_count' : soya} #added
+def get_ans():
+    return ansDict
 
 # Press any key to close the image
 cv2.waitKey(0)
