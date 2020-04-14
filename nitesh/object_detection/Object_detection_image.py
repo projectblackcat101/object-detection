@@ -41,7 +41,7 @@ CWD_PATH = os.getcwd()
 PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,'frozen_inference_graph.pb')
 
 # Path to label map file
-PATH_TO_LABELS = ('C:/tensorflow1/models/research/object_detection/training/label_map.pbtxt')
+PATH_TO_LABELS = ('training/label_map.pbtxt')
 
 # Path to image
 PATH_TO_IMAGE = os.path.join(CWD_PATH,IMAGE_NAME)
