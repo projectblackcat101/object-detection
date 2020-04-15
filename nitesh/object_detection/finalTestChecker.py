@@ -1,0 +1,2 @@
+import testChecker
+testChecker.test()
