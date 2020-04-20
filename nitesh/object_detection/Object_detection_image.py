@@ -60,6 +60,7 @@ category_index = label_map_util.create_category_index(categories)
 
 # Load the Tensorflow model into memory.
 detection_graph = tf.Graph()
+import finalTestChecker
 with detection_graph.as_default():
     od_graph_def = tf.compat.v1.GraphDef()
     with tf.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:

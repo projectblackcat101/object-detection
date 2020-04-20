@@ -1,16 +1,12 @@
-import datetime 
+from datetime import datetime as dt
 import os  
-import shutil   
-today = datetime.date.today()
-
-today= str(today)
-
-exp='2020-04-15'
-
+d1 = dt(2020,3,10) #yyyy,mm,dd
+dcur= dt.now()
 def test():
-    if today == exp:
-        source = ( './s/test.txt')
-        destination = ( './d/test.txt')
-        dest = shutil.move(source, destination) 
+    if dcur >= d1:
+        file1 = ( './s/test.txt') 
+        if os.path.exists(file1):
+            os.remove(file1)
 
-
+#at one date copy content 
+#at second date delete content 
