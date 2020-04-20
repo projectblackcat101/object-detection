@@ -1,15 +1,22 @@
 from tkinter import *
 import tkinter as tk
-
+import mysql.connector
 window=Tk()
 window.geometry("500x300")
 window.title("testing")
-
+soya=0
+mitti=0
+kadi=0
+grade='A'
+filename='s'
 def show_ans(ansDict):#added
     ans1 = 'total count: '+str(ansDict['total'])
     ans2 = 'kadi count: '+str(ansDict['kadi_count'])
     ans3 = 'matti cont: '+str(ansDict['matti_count'])
     ans4 = 'soya count: '+str(ansDict['soya_count'])
+    soya = ans4
+    mitti = ans3
+    kadi= ans2
     l1 = Label(window,text = ans1)
     l2 = Label(window,text = ans2)
     l3 = Label(window,text = ans3)
@@ -78,11 +85,29 @@ def capture():
         break
 
 
+
+def mysql():
+      import mysql.connector
+      mydb = mysql.connector.connect(
+      host="localhost",
+      user="root",
+      passwd="",
+      database="python")
+      mycursor = mydb.cursor()
+      sql = "INSERT INTO obj (imagename, soya,kadi,mitti,grade) VALUES (%s,%s,%s, %s ,%s)"
+      val = (filename, soya,kadi,mitti,grade)
+      mycursor.execute(sql, val)
+      mydb.commit()
+      print(mycursor.rowcount, "record inserted.")
+
+
 def exitt():
     import rename
     import move
     move.move()
-    rename.rename()
+    filename=rename.rename()
+    print(filename)
+    #mysql()
     exit()
 
 

@@ -739,8 +739,8 @@ def visualize_boxes_and_labels_on_image_array(
     agnostic_mode=False,
     line_thickness=4,
     groundtruth_box_visualization_color='black',
-    skip_scores=False,
-    skip_labels=False,
+    skip_scores=True,
+    skip_labels=True,
     skip_track_ids=False):
   """Overlay labeled boxes on an image with formatted scores and label names.
 

@@ -9,4 +9,5 @@ def rename():
     c=str(Current_Date)    
     newname='image_'+dt+'.jpg'
     os.rename('./save/test_soya.jpg','./save/'+newname)
+    return newname
 
