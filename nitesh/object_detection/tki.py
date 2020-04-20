@@ -9,14 +9,20 @@ mitti=0
 kadi=0
 grade='A'
 filename='s'
+
+
 def show_ans(ansDict):#added
+    global soya
+    global mitti
+    global kadi
     ans1 = 'total count: '+str(ansDict['total'])
     ans2 = 'kadi count: '+str(ansDict['kadi_count'])
     ans3 = 'matti cont: '+str(ansDict['matti_count'])
     ans4 = 'soya count: '+str(ansDict['soya_count'])
-    soya = ans4
-    mitti = ans3
-    kadi= ans2
+    soya=ansDict['soya_count']
+    mitti = ansDict['matti_count']
+    kadi = ansDict['kadi_count']
+    
     l1 = Label(window,text = ans1)
     l2 = Label(window,text = ans2)
     l3 = Label(window,text = ans3)
@@ -29,7 +35,10 @@ def show_ans(ansDict):#added
 def prediction():
     import Object_detection_image as odi
     ansDict = odi.get_ans()
+    global_dict = ansDict
     show_ans(ansDict)
+
+
 
 def capture():
     print("Starting Camera")
@@ -86,14 +95,15 @@ def capture():
 
 
 
-def mysql():
+def mysql(filename,soya,kadi,mitti,grade):
       import mysql.connector
       mydb = mysql.connector.connect(
-      host="localhost",
-      user="root",
-      passwd="",
-      database="python")
+      host="db4free.net",
+      user="projectblackcat",
+      passwd="projectblackcat@123",
+      database="pythonproject")
       mycursor = mydb.cursor()
+      
       sql = "INSERT INTO obj (imagename, soya,kadi,mitti,grade) VALUES (%s,%s,%s, %s ,%s)"
       val = (filename, soya,kadi,mitti,grade)
       mycursor.execute(sql, val)
@@ -107,7 +117,8 @@ def exitt():
     move.move()
     filename=rename.rename()
     print(filename)
-    #mysql()
+    print(kadi)
+    mysql(filename,soya,kadi,mitti,grade)
     exit()
 
 
