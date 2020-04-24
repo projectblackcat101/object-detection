@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 import mysql.connector
+import cv2
 window=Tk()
 window.geometry("500x300")
 window.title("testing")
@@ -9,7 +10,7 @@ mitti=0
 kadi=0
 grade='A'
 filename='s'
-
+count = 1
 
 def show_ans(ansDict):#added
     global soya
@@ -41,59 +42,38 @@ def prediction():
 
 
 def capture():
-    print("Starting Camera")
-    import cv2
-    from time import sleep
-    #key = cv2. waitKey(1)
-    webcam = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0)
+    cv2.namedWindow('frame')
     
-    sleep(2)
-    while True:
-     try:
-        check, frame = webcam.read()
+
+    while(True):
+        ret, frame = cap.read()
         cv2.setMouseCallback('frame',captureFrame,frame)
-        #print(check) #prints true as long as the webcam is running
-        #print(frame) #prints matrix values of each framecd
-        #cv2.putText(frame, "Press s to save image", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255))
-        #cv2.putText(frame, "Press q to quit image", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255))
+
+        print('hi')
+
         
-        cv2.imshow("Capturing", frame)
-        #key = cv2.waitKey(1)
-        def captureFrame(event,x,y,flags,frame):
 
-         if event == cv2.EVENT_LBUTTONDBLCLK:
-            cv2.imwrite(filename='test_soya.jpg', img=frame)
-            webcam.release()
-            #print("Processing image...")
-            #img_ = cv2.imread('saved_img.jpg', cv2.IMREAD_ANYCOLOR)
-            #print("Converting RGB image to grayscale...")
-            #gray = cv2.cvtColor(img_, cv2.COLOR_BGR2GRAY)
-            #print("Converted RGB image to grayscale...")
-            #print("Resizing image to 28x28 scale...")
-            #img_ = cv2.resize(gray,(300,300))
-            #print("Resized...")
-            #img_resized = cv2.imwrite(filename='saved_img-final.jpg', img=img_)
-            print("Image saved!")
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
-             break
-         elif key == ord('q'):
-            print("Turning off camera.")
-            webcam.release()
-            print("Camera off.")
-            print("Program ended.")
-            cv2.destroyAllWindows()
-            break
+        
 
-     except(KeyboardInterrupt):
-        print("Turning off camera.")
-        webcam.release()
-        print("Camera off.")
-        print("Program ended.")
-        cv2.destroyAllWindows()
-        break
+        if ret:
+            cv2.imshow('frame',frame)
+            global count
+            if count == 2:
+                break
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
+    cap.release()
+    cv2.destroyAllWindows()
 
+def captureFrame(event,x,y,flags,frame):
+    global count 
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        cv2.imwrite('test_soya.jpg',frame) # want to save frame here
+        print(count)
+        count=2
+        print(count)
 
 def mysql(filename,soya,kadi,mitti,grade):
       import mysql.connector
