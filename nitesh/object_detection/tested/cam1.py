@@ -9,6 +9,7 @@ def main():
     while(True):
         ret, frame = cap.read()
         cv2.setMouseCallback('frame',captureFrame,frame)
+        break
         
 
         if ret:
@@ -22,6 +23,7 @@ def main():
 def captureFrame(event,x,y,flags,frame):
     if event == cv2.EVENT_LBUTTONDBLCLK:
         cv2.imwrite('test.jpg',frame) # want to save frame here
+        
 
 
 if __name__ == "__main__":
