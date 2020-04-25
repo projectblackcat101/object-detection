@@ -50,7 +50,7 @@ def capture():
         ret, frame = cap.read()
         cv2.setMouseCallback('frame',captureFrame,frame)
 
-        print('hi')
+        
 
         
 
@@ -71,9 +71,9 @@ def captureFrame(event,x,y,flags,frame):
     global count 
     if event == cv2.EVENT_LBUTTONDBLCLK:
         cv2.imwrite('test_soya.jpg',frame) # want to save frame here
-        print(count)
+        
         count=2
-        print(count)
+        
 
 def mysql(filename,soya,kadi,mitti,grade):
       import mysql.connector
