@@ -49,13 +49,7 @@ def capture():
     while(True):
         ret, frame = cap.read()
         cv2.setMouseCallback('frame',captureFrame,frame)
-
         
-
-        
-
-        
-
         if ret:
             cv2.imshow('frame',frame)
             global count
